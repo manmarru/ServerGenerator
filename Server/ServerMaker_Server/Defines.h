@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <Windows.h>
-#include "DataInfo.h"
+#include "DataDefine.h"
 
 using namespace std;
 
