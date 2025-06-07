@@ -1,19 +1,9 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <string>
+#include <Windows.h>
+#include "DataInfo.h"
 
-struct PACKAGE
-{
-	char szID;
-	int iType;
-	char Data[1024];
-};
+using namespace std;
 
-struct SERVERINFO
-{
-	bool UsingHeader;
-	int AccessLimit;
-	bool AlertConnect;
-	bool AlertReceive;
-	bool AlertSend;
-};

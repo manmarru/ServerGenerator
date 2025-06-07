@@ -1,5 +1,6 @@
 UsingHeader=True
-AccessLimit=2
+AccessLimit=4
 AlertConnect=True
 AlertReceive=False
 AlertSend=False
+UserNameInput=True
