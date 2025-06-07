@@ -3,6 +3,7 @@ import tkinter.messagebox as messagebox
 import tkinter.filedialog as filedialog
 import os
 import subprocess
+import requests
 
 # 세이브 함수
 def save_settings():
@@ -11,7 +12,8 @@ def save_settings():
         "AccessLimit": AccessLimitEntry.get(),
         "AlertConnect": AlertConnect.get(),
         "AlertReceive": AlertReceive.get(),
-        "AlertSend": AlertSend.get()
+        "AlertSend": AlertSend.get(),
+        "UserNameInput": UserNameInput.get()
     }
     
     file_path = filedialog.asksaveasfilename(
@@ -37,11 +39,12 @@ def load_settings():
         key, value = line.strip().split('=')
         settings[key] = value
             
-    UsingHeader.set(settings["UsingHeader"])
     AccessLimitEntry.delete(0, tk.END)
     AccessLimitEntry.insert(0, settings.get("AccessLimit", "0"))
+    UsingHeader.set(settings["UsingHeader"])
     AlertConnect.set(settings["AlertConnect"])
     AlertReceive.set(settings["AlertReceive"])
+    UserNameInput.set(settings["UserNameInput"])
     AlertSend.set(settings["AlertSend"])
     f.close()
 
@@ -50,13 +53,15 @@ def GenerateServer():
     exe_path = os.path.join(dir, "..", "Server", "x64", "Debug", "Server.exe")
     args = [
         exe_path,
-        "UsingHeader", str(UsingHeader.get()).lower(),
         "AccessLimit", AccessLimitEntry.get(),
+        "UsingHeader", str(UsingHeader.get()).lower(),
         "AlertConnect", str(AlertConnect.get()).lower(),
         "AlertReceive", str(AlertReceive.get()).lower(),
-        "AlertSend", str(AlertSend.get()).lower()
+        "AlertSend", str(AlertSend.get()).lower(),
+        "UserNameInput", str(UserNameInput.get()).lower()
     ]
     subprocess.Popen(args=args, creationflags=subprocess.CREATE_NEW_CONSOLE)
+    print(requests.get("https://api.ipify.org").text)
     
 import os
 print("현재 작업 디렉토리:", os.getcwd())
@@ -76,6 +81,8 @@ UsingHeader = tk.BooleanVar()
 Header = tk.Checkbutton(root, text = "헤더 데이터", variable = UsingHeader)
 
 # 최초 데이터로 아이디 입력/서버가 번호 부여
+UserNameInput = tk.BooleanVar()
+UserNameInputButton = tk.Checkbutton(root, text = "아이디 입력받음", variable = UserNameInput)
 
 # 콘솔에 출력할 정보 체크박스
 # 1. 접속/접속해제 알림
@@ -102,12 +109,15 @@ label.grid(row=0, column=0, columnspan=2, pady=5)
 AccessLimitEntry.grid(row=1, column=0, columnspan=2, padx=20, pady=5)
 Header.grid(row=2, column=0, columnspan=2, pady=8)
 label2.grid(row=3, column=0, columnspan=2, pady=12)
-AlertConnectButton.grid(row=4, column=0, columnspan=2, sticky='w', padx=20, pady=2)
-AlertReceiveButton.grid(row=5, column=0, columnspan=2, sticky='w', padx=20, pady=2)
-AlertSendButton.grid(row=6, column=0, columnspan=2, sticky='w', padx=20, pady=2)
-StartButton.grid(row=8, column=0, columnspan=2, pady=(0, 20))
-SaveButton.grid(row=7, column=0, padx=(20, 5), pady=20, sticky='e')
-LoadButton.grid(row=7, column=1, padx=(5, 20), pady=20, sticky='w')
+
+AlertConnectButton.grid(row=4, column=0, sticky='ew', padx=20, pady=2)
+AlertReceiveButton.grid(row=5, column=0, sticky='ew', padx=20, pady=2)
+AlertSendButton.grid(row=4, column=1, sticky='ew', padx=20, pady=2)
+UserNameInputButton.grid(row=5, column=1, sticky='ew', padx=20, pady=2)
+
+SaveButton.grid(row=8, column=0, padx=(20, 5), pady=20, sticky='e')
+LoadButton.grid(row=8, column=1, padx=(5, 20), pady=20, sticky='w')
+StartButton.grid(row=9, column=0, columnspan=2, pady=(0, 20))
 
 # 그리드 가운데 정렬
 root.grid_columnconfigure(0, weight=1)
