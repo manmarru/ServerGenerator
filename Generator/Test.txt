@@ -1,0 +1,5 @@
+UsingHeader=False
+AccessLimit=1
+AlertConnect=True
+AlertReceive=False
+AlertSend=False
