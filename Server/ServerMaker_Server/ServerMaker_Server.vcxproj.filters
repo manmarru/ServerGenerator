@@ -18,7 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CMySystem.cpp">
+    <ClCompile Include="MySystem.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -26,7 +26,7 @@
     <ClInclude Include="Defines.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CMySystem.h">
+    <ClInclude Include="MySystem.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

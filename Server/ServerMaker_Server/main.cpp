@@ -1,18 +1,21 @@
 #include "Defines.h"
-#include "CMySystem.h"
+#include "MySystem.h"
 #include <process.h>
 
 CMySystem* pMySystem;
 
 unsigned int __stdcall WaitForPlayer(void* pArg)
 {
-	pMySystem->ConnectUser();
+	while (1)
+	{
+		pMySystem->ConnectUser();
+	}
 	return 0;
 }
 
 int main(int argc, char *argv[])
 {
-	if (argc < 10)
+	if (argc < 13)
 	{
 		cout << "프로세스 인자 갯수 이상함!" << endl;
 		system("pause");
@@ -34,7 +37,6 @@ int main(int argc, char *argv[])
 	{
 		cout << argv[i] << ": " << argv[i + 1] << endl;
 	}
-	system("pause");
 
 	pMySystem = CMySystem::Create(Info);
 	
@@ -44,7 +46,10 @@ int main(int argc, char *argv[])
 	
 	HANDLE ConnectThread;
 	ConnectThread = (HANDLE)_beginthreadex(nullptr, 0, WaitForPlayer, nullptr, 0, &ThreadID);
-
+	while (1)
+	{
+		pMySystem->Update();
+	}
 
 	pMySystem->Free();
 	

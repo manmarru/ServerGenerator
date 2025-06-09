@@ -12,11 +12,11 @@ private:
 public:
 	RESULT Initialize(SERVERINFO _Info);
 	void Update();
-	void Late_Update();
 	void Release();
 
 public:
 	int Recv_N_Send();
+	void SendToAll(char* Send, int SendSize);
 public:
 	unsigned int APIENTRY ConnectUser();
 	void WaitForPlayer();
@@ -24,6 +24,8 @@ public:
 private:
 	SOCKET m_hServSock;
 	SOCKADDR_IN m_ServAddr;
+	fd_set m_Reads;
+	fd_set m_Temps;
 
 private:
 	vector<SOCKET> m_hClntSock;
