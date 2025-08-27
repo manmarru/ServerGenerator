@@ -53,7 +53,8 @@ RESULT CMySystem::Initialize(SERVERINFO _Info)
 
 void CMySystem::Update()
 {
-    PACKAGE Recv;
+    //지금 서버 옵션에 따른 분기설정이 안돼있다.
+    NAME_PACKAGE Recv;
     m_Temps = m_Reads;
     
     if (0 == m_CurrUser)
@@ -68,7 +69,7 @@ void CMySystem::Update()
         Curr = m_Temps.fd_array[i];
         if (FD_ISSET(Curr, &m_Temps))
         {
-            int len = recv(Curr, (char*)&Recv.Data, sizeof(Recv.Data), 0);
+            int len = recv(Curr, (char*)&Recv, sizeof(NAME_PACKAGE), 0);
             if (len <= 0)
             {
                 cout << "recv 실패 또는 연결 단절!\n";
@@ -84,8 +85,8 @@ void CMySystem::Update()
                 --m_CurrUser;
                 continue;
             }
-            cout << Recv.Data << '\n';
-            SendToAll((char*)Recv.Data, sizeof(Recv.Data));
+            cout << Recv.UserName << ": " << Recv.Data << '\n';
+            SendToAll((char*)&Recv, sizeof(NAME_PACKAGE));
         }
     }
 }

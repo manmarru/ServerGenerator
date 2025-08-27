@@ -5,7 +5,7 @@ using namespace std;
 
 struct USERNAME
 {
-	char Name[256];
+	char Name[128];
 };
 
 struct PACKETHEADER
@@ -16,6 +16,12 @@ struct PACKETHEADER
 struct PACKAGE
 {
 	int ID;
+	char Data[1024];
+};
+
+struct NAME_PACKAGE
+{
+	char UserName[128];
 	char Data[1024];
 };
 
